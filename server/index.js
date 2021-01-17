@@ -27,7 +27,7 @@ app.use('/login', loginRouter)
 
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
-  app.use('/api/testing', testingRouter)
+  app.use('/testing', testingRouter)
 }
 
 module.exports = app
