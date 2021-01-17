@@ -12,20 +12,22 @@ const middleware = require('./utils/middleware')
 
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-      .then(console.log(`Connected to MongoDB`))
-      .catch(error => console.log('Error: ', error.message))
+  // eslint-disable-next-line no-console
+  .then(console.log('Connected to MongoDB'))
+  // eslint-disable-next-line no-console
+  .catch(error => console.log('Error: ', error.message))
 
 
 app.use(express.json())
 app.use(cors())
 app.use(middleware.tokenExtractor)
-app.use('/api/blogs', blogRouter)
-app.use('/api/users', userRouter)
-app.use('/api/login', loginRouter)
+app.use('/blogs', blogRouter)
+app.use('/users', userRouter)
+app.use('/login', loginRouter)
 
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
 }
 
-module.exports = app;
+module.exports = app

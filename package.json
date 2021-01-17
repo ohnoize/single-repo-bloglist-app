@@ -2,7 +2,7 @@
   "name": "single-repo-bloglist-app",
   "version": "1.0.0",
   "description": "Single Repo Bloglist App",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "start-prod": "cross-env NODE_ENV=production node index.js",
@@ -51,17 +51,20 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
-    "axios": "^0.21.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
+    "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
     "mongoose-unique-validator": "^2.0.3",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^2.1.8"
   }
 }
