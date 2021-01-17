@@ -23,17 +23,17 @@ const Blog = ({ blog, updateBlog, removeBlog }) => {
     setVisible(!visible)
   }
 
-let showWhenLogged = { display: 'none' }
+  let showWhenLogged = { display: 'none' }
   if (window.localStorage.loggedBlogListUser) {
-  const loggedUser = JSON.parse(window.localStorage.loggedBlogListUser)
+    const loggedUser = JSON.parse(window.localStorage.loggedBlogListUser)
 
 
 
 
-  if (loggedUser.name === blog.user.name) {
-    showWhenLogged = { display: '' }
+    if (loggedUser.name === blog.user.name) {
+      showWhenLogged = { display: '' }
+    }
   }
-}
 
   const addLike = (blog) => {
     updateBlog({

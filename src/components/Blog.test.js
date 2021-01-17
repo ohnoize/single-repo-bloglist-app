@@ -22,37 +22,37 @@ describe('blog rendering', () => {
     )
   })
 
-test('renders title and author', () => {
-  expect(component.container).toHaveTextContent(
-    'Testblog'
-  )
-})
+  test('renders title and author', () => {
+    expect(component.container).toHaveTextContent(
+      'Testblog'
+    )
+  })
 
-test('extra info not displayed', () => {
-  const div = component.container.querySelector('.extraInfo')
-  expect(div).toHaveStyle('display: none')
-})
+  test('extra info not displayed', () => {
+    const div = component.container.querySelector('.extraInfo')
+    expect(div).toHaveStyle('display: none')
+  })
 
-test('extra info displayed after button pressed', () => {
-  const button = component.getByText('Show')
-  fireEvent.click(button)
-  const div = component.container.querySelector('.extraInfo')
-  expect(div).not.toHaveStyle('display: none')
-})
+  test('extra info displayed after button pressed', () => {
+    const button = component.getByText('Show')
+    fireEvent.click(button)
+    const div = component.container.querySelector('.extraInfo')
+    expect(div).not.toHaveStyle('display: none')
+  })
 
 })
 
 describe('like button', () => {
 
-test('like button works as intended', () => {
-  const mockHandler = jest.fn()
-  component = render(
-    <Blog blog={blog} updateBlog={mockHandler} />
-  )
-  const button = component.getByText('Like')
-  fireEvent.click(button)
-  fireEvent.click(button)
+  test('like button works as intended', () => {
+    const mockHandler = jest.fn()
+    component = render(
+      <Blog blog={blog} updateBlog={mockHandler} />
+    )
+    const button = component.getByText('Like')
+    fireEvent.click(button)
+    fireEvent.click(button)
 
-  expect(mockHandler.mock.calls).toHaveLength(2)
-})
+    expect(mockHandler.mock.calls).toHaveLength(2)
+  })
 })

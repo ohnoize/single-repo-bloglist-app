@@ -15,13 +15,13 @@ test('Blog form', () => {
   const form = component.container.querySelector('form')
 
   fireEvent.change(title, {
-    target: { value: 'Testing forms'}
+    target: { value: 'Testing forms' }
   })
   fireEvent.change(author, {
-    target: { value: 'Testy Testman'}
+    target: { value: 'Testy Testman' }
   })
   fireEvent.change(url, {
-    target: { value: 'www.testurl.com'}
+    target: { value: 'www.testurl.com' }
   })
   fireEvent.submit(form)
 

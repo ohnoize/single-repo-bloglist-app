@@ -1,10 +1,7 @@
-const dummy = (blogs) => {
-  return 1
-}
 
 const totalLikes = (blogs) => {
   return blogs.map(a => a.likes)
-              .reduce((a, b) => a + b)
+    .reduce((a, b) => a + b)
 }
 
 const favoriteBlog = (blogs) => {
@@ -46,9 +43,9 @@ const mostLikes = (blogs) => {
     }
   }
   const likeAmounts = uniques
-                        .map(x => blogs.filter(a => a.author === x)) //Separates authors in their own arrays
-                        .map(a => a.map(b => b.likes)) //Reduces the arrays just to their likes
-                        .map(a => a.reduce((c, d) => c + d)) //Calculates the total likes for each author
+    .map(x => blogs.filter(a => a.author === x)) //Separates authors in their own arrays
+    .map(a => a.map(b => b.likes)) //Reduces the arrays just to their likes
+    .map(a => a.reduce((c, d) => c + d)) //Calculates the total likes for each author
   const max = Math.max(...likeAmounts)
   const index = likeAmounts.indexOf(max)
   return {
@@ -58,7 +55,6 @@ const mostLikes = (blogs) => {
 }
 
 module.exports = {
-  dummy,
   totalLikes,
   favoriteBlog,
   mostBlogs,
