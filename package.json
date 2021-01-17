@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "start-prod": "cross-env NODE_ENV=production node app.js",
+    "start-prod": "cross-env NODE_ENV=production node index.js",
     "test": "jest",
     "eslint": "eslint './**/*.{js,jsx}'",
     "build": "webpack --mode production",
@@ -53,7 +53,7 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "react": "^16.13.1",
