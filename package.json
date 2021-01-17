@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "start-prod": "cross-env NODE_ENV=production node index.js",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "eslint": "eslint './**/*.{js,jsx}'",
     "build": "webpack --mode production",
     "cypress:open": "cypress open",

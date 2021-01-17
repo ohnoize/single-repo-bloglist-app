@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const app = require('../app')
+const app = require('../index')
 const helper = require('./test_helper')
 const api = supertest(app)
 const bcrypt = require('bcrypt')
@@ -12,16 +12,19 @@ const User = require('../models/user')
 describe('tests for adding and deleting blogs', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
-    await Blog.insertMany(helper.initialBlogs)
     await User.deleteMany({})
+    const blogObjects = helper.initialBlogs
+      .map(blog => new Blog(blog))
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
     const passwordHash = await bcrypt.hash('secret', 10)
     const user = new User({ username: 'root', passwordHash })
     await user.save()
-
   })
 
   test('right amount of blogs returned', async () => {
-    const response = await api.get('/api/blogs')
+    const response = await api.get('/blogs')
+    console.log(response.body)
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
 
@@ -52,7 +55,7 @@ describe('tests for adding and deleting blogs', () => {
     console.log(token)
 
     await api
-      .post('/api/blogs')
+      .post('/blogs')
       .set('Authorization', `bearer ${token}`)
       .send(newBlog)
       .expect(201)
@@ -82,7 +85,7 @@ describe('tests for adding and deleting blogs', () => {
     const token = jwt.sign(forToken, process.env.SECRET)
 
     await api
-      .post('/api/blogs')
+      .post('/blogs')
       .set('Authorization', `bearer ${token}`)
       .send(newBlog)
 
@@ -108,7 +111,7 @@ describe('tests for adding and deleting blogs', () => {
     const token = jwt.sign(forToken, process.env.SECRET)
 
     await api
-      .post('/api/blogs')
+      .post('/blogs')
       .set('Authorization', `bearer ${token}`)
       .send(newBlog)
       .expect(400)
@@ -135,7 +138,7 @@ describe('tests for adding and deleting blogs', () => {
     const token = jwt.sign(forToken, process.env.SECRET)
 
     await api
-      .post('/api/blogs')
+      .post('/blogs')
       .set('Authorization', `bearer ${token}`)
       .send(blogToAdd)
 
@@ -145,7 +148,7 @@ describe('tests for adding and deleting blogs', () => {
     const blogToDelete = await Blog.findOne({ title: 'Doomed blog' })
 
     await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
+      .delete(`/blogs/${blogToDelete.id}`)
       .set('Authorization', `bearer ${token}`)
       .expect(204)
 
@@ -156,24 +159,18 @@ describe('tests for adding and deleting blogs', () => {
   })
 
   test('make sure updating blogs works', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToUpdate = blogsAtStart[0]
+    const [ blogToUpdate ] = await helper.blogsInDb()
     console.log(blogToUpdate)
-    const updatedBlog = {
-      title: 'Testblog',
-      author: 'Olli Hirvonen',
-      url: 'http://www.ollihirvonen.com',
-      likes: '666',
-      id: blogToUpdate.id
-    }
+    const updatedBlog = { ...blogToUpdate, likes: blogToUpdate.likes + 1 }
     console.log(updatedBlog)
     await api
-      .put(`/api/blogs/${blogToUpdate.id}`)
+      .put(`/blogs/${blogToUpdate.id}`)
       .send(updatedBlog)
+      .expect(200)
 
     const blogsAtEnd = await helper.blogsInDb()
-    const targetBlog = blogsAtEnd[0]
-    expect(targetBlog.title).toBe('Testblog')
+    const edited = blogsAtEnd.find(b => b.url === blogToUpdate.url)
+    expect(edited.likes).toBe(blogToUpdate.likes + 1)
   })
 
 })
@@ -195,7 +192,7 @@ describe('tests for user database', () => {
     }
 
     await api
-      .post('/api/users')
+      .post('/users')
       .send(newUser)
       .expect(400 || 500)
 
