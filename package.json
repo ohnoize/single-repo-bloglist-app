@@ -1,5 +1,5 @@
 {
-  "name": "single-repo-bliglist-app",
+  "name": "single-repo-bloglist-app",
   "version": "1.0.0",
   "description": "Single Repo Bloglist App",
   "main": "src/index.js",
