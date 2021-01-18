@@ -32,13 +32,28 @@ jobs:
           start: npm run start:test
           wait-on: http://localhost:5000
           wait-on-timeout: 1000
+      - name: bump version and push tag
+        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message), '#skip') == false  }}
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
       - name: deploy
-        if: ${{ contains(join(github.event.commits.*.message), '#skip') == false }}
+        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message), '#skip') == false }}
         uses: akhileshns/heroku-deploy@v3.8.9
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "damp-scrubland-39468"
           heroku_email: "ollihirvonen@gmail.com" 
-          healthcheck: "https://damp-scrubland-39468.herokuapp.com/api/health"
+          healthcheck: "https://damp-scrubland-39468.herokuapp.com/health"
           checkstring: "ok"
-          # rollbackonhealthcheckfailed: true
+          rollbackonhealthcheckfailed: true
+      - name: report to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always()

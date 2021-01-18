@@ -2,10 +2,10 @@
   "name": "single-repo-bloglist-app",
   "version": "1.0.0",
   "description": "Single Repo Bloglist App",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "start-prod": "cross-env NODE_ENV=production node index.js",
+    "start-prod": "NODE_ENV=production node index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "eslint": "eslint './**/*.{js,jsx}'",
     "build": "webpack --mode production",
@@ -22,9 +22,6 @@
   ],
   "author": "Olli Hirvonen",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/smartlyio/fullstackopen-cicd/issues"
-  },
   "homepage": "https://github.com/ohnoize/-single-repo-bloglist-app#readme",
   "devDependencies": {
     "@babel/core": "^7.9.6",
