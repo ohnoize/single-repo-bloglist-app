@@ -39,6 +39,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "damp-scrubland-39468"
           heroku_email: "ollihirvonen@gmail.com" 
-          healthcheck: "https://damp-scrubland-39468.herokuapp.com/health"
+          healthcheck: "https://damp-scrubland-39468.herokuapp.com/api/health"
           checkstring: "ok"
-          rollbackonhealthcheckfailed: true
+          # rollbackonhealthcheckfailed: true
