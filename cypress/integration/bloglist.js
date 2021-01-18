@@ -63,15 +63,14 @@ describe('blog app', function() {
           author: 'Cypress man',
           url: 'www.testblog.com'
         })
+        cy.contains('Another').parent().parent().as('blog1')
+        cy.contains('Second').parent().parent().as('blog2')
+        cy.contains('Third').parent().parent().as('blog3')
       })
-      it('blog can be liked', function() {
-        cy.get('#showButton').click()
-        cy.wait(2000)
-        cy.get('#likeButton').click()
-        cy.wait(2000)
-        cy.get('#likeButton').click()
-        cy.wait(2000)
-        cy.contains('Likes: 2')
+      it('Blogs can be liked', function() {
+        cy.get('@blog2').contains('view').click()
+        cy.get('@blog2').contains('like').click()
+        cy.get('@blog2').contains('likes 1')
       })
       it('blog can be removed', function() {
         cy.get('#showButton').click()
