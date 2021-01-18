@@ -33,12 +33,12 @@ jobs:
           wait-on: http://localhost:5000
           wait-on-timeout: 1000
       - name: deploy
-        if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message), '#skip') == false }}
+        if: ${{ contains(join(github.event.commits.*.message), '#skip') == false }}
         uses: akhileshns/heroku-deploy@v3.8.9
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "damp-scrubland-39468"
           heroku_email: "ollihirvonen@gmail.com" 
-          healthcheck: "https://damp-scrubland-39468.herokuapp.com/health"
+          healthcheck: "https://damp-scrubland-39468.herokuapp.com/api/health"
           checkstring: "ok"
-          rollbackonhealthcheckfailed: true
+          # rollbackonhealthcheckfailed: true
