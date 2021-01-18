@@ -90,11 +90,9 @@ describe('blog app', function() {
         cy.get(':nth-child(2) > #showButton').click()
         cy.wait(2000)
         cy.get(':nth-child(2) > .extraInfo > :nth-child(2) > #likeButton').click()
-        cy.wait(2000)
         cy.get(':nth-child(4) > #showButton').click()
         cy.wait(2000)
         cy.get(':nth-child(4) > .extraInfo > :nth-child(2) > #likeButton').click().click()
-        cy.wait(2000)
         cy.get('#blogInfo').should('contain', 'Third cypress blog') //the div id only takes the first instance, so we will see if the blog with most votes is at the top
         cy.get('#blogInfo').should('not.contain', 'Another cypress blog')
       })
