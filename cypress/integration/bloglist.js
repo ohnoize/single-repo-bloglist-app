@@ -67,10 +67,14 @@ describe('blog app', function() {
         cy.contains('Second').parent().parent().as('blog2')
         cy.contains('Third').parent().parent().as('blog3')
       })
-      it('Blogs can be liked', function() {
-        cy.get('@blog2').contains('view').click()
-        cy.get('@blog2').contains('like').click()
-        cy.get('@blog2').contains('likes 1')
+      it('blog can be liked', function() {
+        cy.get('#showButton').click()
+        cy.wait(2000)
+        cy.get('#likeButton').click()
+        cy.wait(2000)
+        cy.get('#likeButton').click()
+        cy.wait(2000)
+        cy.contains('Likes: 2')
       })
       it('blog can be removed', function() {
         cy.get('#showButton').click()
@@ -87,11 +91,12 @@ describe('blog app', function() {
       })
       it('the blog with most likes is at the top', function() {
         cy.get(':nth-child(2) > #showButton').click()
-        cy.wait(2000)
+        cy.wait(500)
         cy.get(':nth-child(2) > .extraInfo > :nth-child(2) > #likeButton').click()
         cy.get(':nth-child(4) > #showButton').click()
-        cy.wait(2000)
+        cy.wait(500)
         cy.get(':nth-child(4) > .extraInfo > :nth-child(2) > #likeButton').click().click()
+        cy.wait(500)
         cy.get('#blogInfo').should('contain', 'Third cypress blog') //the div id only takes the first instance, so we will see if the blog with most votes is at the top
         cy.get('#blogInfo').should('not.contain', 'Another cypress blog')
       })
